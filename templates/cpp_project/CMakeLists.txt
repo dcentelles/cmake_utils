@@ -4,9 +4,12 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_COLOR_MAKEFILE   ON)
 
 #SET PROJECT NAME
+#NOTE: replace "foo" by your project name
 SET(PROJECT_NAME_ORIG "foo" )
 
 #SET DEPENDENCIES DIRECTORY
+#NOTE: replace "gitsubmodules" by the directory name where your
+#      cmake based git submodules are"
 SET(MODULES_DIR "gitsubmodules" )
 
 message("Building ${PROJECT_NAME_ORIG}...")
