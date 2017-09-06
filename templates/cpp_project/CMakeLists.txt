@@ -59,6 +59,23 @@ message(STATUS "PROJECT NAME: ${PROJECT_NAME}")
 ####### BUILD DEPENDENCIES #######
 ##################################
 
+#MODULES_DIR (Git submodules) EXAMPLE:
+#./gitsubmodules: (NOTE: SET(MODULES_DIR "gitsubmodules" )))
+#  module0/
+#    .git
+#    CMakeLists.txt:
+#          ...
+#          SET(PROJECT_NAME_ORIG "lib1" )
+#          ...
+#    ...
+#  module1/
+#    .git
+#    CMakeLists.txt:
+#           ...
+#           SET(PROJECT_NAME_ORIG "lib2" )
+#           ...
+#    ...
+
 SET(DEPS_DIR ${MODULES_DIR})
 SET(TMP0 ${CMAKE_CURRENT_SOURCE_DIR}/${DEPS_DIR})
 GETPROJECTS(DEPS ${TMP0})
@@ -115,23 +132,11 @@ ENDFOREACH()
 #                        )
 
 #add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_CPP_FILES})
-#target_link_libraries(${PROJECT_NAME} ${DEP1_GIT})
+#target_link_libraries(${PROJECT_NAME} ${LIB2_GIT})
 #target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS})
 
-
-#MODULES_DIR EXAMPLE:
-#./gitsubmodules: (NOTE: SET(MODULES_DIR "gitsubmodules" )))
-#  dep0/
-#    .git
-#    CMakeLists.txt
-#    ...
-#  dep1/
-#    .git
-#    CMakeLists.txt
-#    ...
-
 #add_executable (main ${SRCPATH}main/main.cpp)
-#target_link_libraries(${ROVA} ${DEP2_GIT} ... ${catkin_LIBRARIES} ${PROJECT_NAME})
+#target_link_libraries(${ROVA} ${LIB2_GIT} ... ${catkin_LIBRARIES} ${PROJECT_NAME})
 
 
 #install(TARGETS ${PROJECT_NAME} main
