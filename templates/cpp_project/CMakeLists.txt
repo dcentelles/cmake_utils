@@ -59,7 +59,7 @@ message(STATUS "PROJECT NAME: ${PROJECT_NAME}")
 ####### BUILD DEPENDENCIES #######
 ##################################
 
-#MODULES_DIR (Git submodules) EXAMPLE:
+### EXAMPLE:
 #./gitsubmodules: (NOTE: SET(MODULES_DIR "gitsubmodules" )))
 #  module0/
 #    .git
