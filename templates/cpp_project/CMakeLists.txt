@@ -100,13 +100,13 @@ ENDFOREACH()
 # include_directories(include)
 
 #SET(SRCPATH src/)
-#include_directories(
-#  ${SRCPATH}lib/include
-#  ${catkin_INCLUDE_DIRS}
+#SET(${PROJECT_NAME}_INCLUDE_DIRS
+#    ${SRCPATH}lib/include
 #)
 
-#SET(${PROJECT_NAME}_INCLUDE_DIRS
-#    "src/lib/include"
+#include_directories(
+#  ${${PROJECT_NAME}_INCLUDE_DIRS}
+#  ${catkin_INCLUDE_DIRS}
 #)
 
 #SET(${PROJECT_NAME}_CPP_FILES
@@ -115,7 +115,7 @@ ENDFOREACH()
 #                        )
 
 #add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_CPP_FILES})
-#target_link_libraries(${PROJECT_NAME} ${DCCOMMS_GIT})
+#target_link_libraries(${PROJECT_NAME} ${DEP1_GIT})
 #target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS})
 
 
@@ -131,7 +131,7 @@ ENDFOREACH()
 #    ...
 
 #add_executable (main ${SRCPATH}main/main.cpp)
-#target_link_libraries(${ROVA} ${DEP1_GIT} ${DEP2_GIT} ... ${catkin_LIBRARIES} ${PROJECT_NAME})
+#target_link_libraries(${ROVA} ${DEP2_GIT} ... ${catkin_LIBRARIES} ${PROJECT_NAME})
 
 
 #install(TARGETS ${PROJECT_NAME} main
