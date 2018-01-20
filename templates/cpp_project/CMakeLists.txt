@@ -116,7 +116,7 @@ ENDFOREACH()
 #target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS})
 
 #add_executable (main ${SRCPATH}main/main.cpp)
-#target_link_libraries(${ROVA} ${LIB2_GIT} ... ${PROJECT_NAME})
+#target_link_libraries(main ${LIB2_GIT} ... ${PROJECT_NAME})
 
 #SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} PARENT_SCOPE)
 #SET(${PROJECT_NAME}_LIBRARIES ${PROJECT_NAME} ${${DEP0_GIT}_LIBRARIES} ${${DEP1_GIT}_LIBRARIES} PARENT_SCOPE)
