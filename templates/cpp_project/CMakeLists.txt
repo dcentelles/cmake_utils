@@ -112,7 +112,7 @@ ENDFOREACH()
 #                        )
 
 #add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_CPP_FILES})
-#target_link_libraries(${PROJECT_NAME} ${LIB2_GIT})
+#target_link_libraries(${PROJECT_NAME} ${DEP0_GIT} ${DEP1_GIT})
 #target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS})
 
 #add_executable (main ${SRCPATH}main/main.cpp)
