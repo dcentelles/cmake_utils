@@ -63,19 +63,19 @@ message(STATUS "PROJECT NAME: ${PROJECT_NAME}")
 ##################################
 
 ### EXAMPLE:
-#./gitsubmodules: (NOTE: SET(MODULES_DIR "gitsubmodules" )))
+#./gitsubmodules: (NOTE: IF SET(MODULES_DIR "gitsubmodules" )))
 #  module0/
 #    .git
 #    CMakeLists.txt:
 #          ...
-#          SET(PROJECT_NAME_ORIG "lib1" )
+#          SET(PROJECT_NAME_ORIG "dep0" )
 #          ...
 #    ...
 #  module1/
 #    .git
 #    CMakeLists.txt:
 #           ...
-#           SET(PROJECT_NAME_ORIG "lib2" )
+#           SET(PROJECT_NAME_ORIG "dep1" )
 #           ...
 #    ...
 
@@ -91,47 +91,24 @@ ENDFOREACH()
 ######### BUILD PROJECT ##########
 ##################################
 
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
-#find_package(catkin REQUIRED COMPONENTS
-#  roscpp
-#  rospy
-#  std_msgs
-#  actionlib
-#  roslaunch
-#  std_srvs
-#)
-
-#catkin_package(
-#   CATKIN_DEPENDS
-#    roscpp
-#    rospy
-#    std_msgs
-#)
-
-#roslaunch_add_file_check(launch)
-
 ## Add support for C++11, supported in ROS Kinetic and newer
 #add_definitions(-fPIC -std=c++11)
 
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-# include_directories(include)
-
 #SET(SRCPATH src/)
 #SET(${PROJECT_NAME}_INCLUDE_DIRS
-#    ${SRCPATH}lib/include
+#    ${CMAKE_CURRENT_SOURCE_DIR}/${SRCPATH}include
+#    ${${DEP0_GIT}_INCLUDE_DIRS}
+#    ${${DEP1_GIT}_INCLUDE_DIRS}
 #)
 
 #include_directories(
 #  ${${PROJECT_NAME}_INCLUDE_DIRS}
-#  ${catkin_INCLUDE_DIRS}
 #)
 
 #SET(${PROJECT_NAME}_CPP_FILES
-#                        ${SRCPATH}lib/src/module1.cpp
-#                        ${SRCPATH}lib/src/...
+#                        ${SRCPATH}module0.cpp
+#                        ${SRCPATH}module1.cpp
+#                            ...
 #                        )
 
 #add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_CPP_FILES})
@@ -139,13 +116,15 @@ ENDFOREACH()
 #target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS})
 
 #add_executable (main ${SRCPATH}main/main.cpp)
-#target_link_libraries(${ROVA} ${LIB2_GIT} ... ${catkin_LIBRARIES} ${PROJECT_NAME})
+#target_link_libraries(${ROVA} ${LIB2_GIT} ... ${PROJECT_NAME})
 
+#SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} PARENT_SCOPE)
+#SET(${PROJECT_NAME}_LIBRARIES ${PROJECT_NAME} ${${DEP0_GIT}_LIBRARIES} ${${DEP1_GIT}_LIBRARIES} PARENT_SCOPE)
 
 #install(TARGETS ${PROJECT_NAME} main
 #        LIBRARY DESTINATION "lib"
 #        RUNTIME DESTINATION "bin"
 #        )
-#install(DIRECTORY "${SRCPATH}lib/include/${PROJECT_NAME}" DESTINATION "include")
+#install(DIRECTORY "${SRCPATH}include/${PROJECT_NAME}" DESTINATION "include")
 
 message("End ${PROJECT_NAME_ORIG}")
