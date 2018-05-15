@@ -84,7 +84,26 @@ SET(TMP0 ${CMAKE_CURRENT_SOURCE_DIR}/${DEPS_DIR})
 GETPROJECTS(DEPS ${TMP0})
 message(STATUS "Dependencies found in ${TMP0}: ${DEPS}")
 FOREACH(subdir ${DEPS})
-    add_subdirectory(${DEPS_DIR}/${subdir})
+if(GIT_FOUND)
+  SET(SUBPROJECT_PATH ${DEPS_DIR}/${subdir})
+  SET(SUBPROJECT_FULL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPROJECT_PATH})
+  execute_process(
+    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+    WORKING_DIRECTORY ${SUBPROJECT_FULL_PATH}
+    OUTPUT_VARIABLE _sub_build_version
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+  SET(SUBPROJECT_GIT_NAME ${subdir}_${_sub_build_version})
+  message(STATUS "Subproject generated git name: " ${SUBPROJECT_GIT_NAME})
+  if (TARGET ${subdir})
+      message(WARNING "Subproject ${SUBPROJECT_GIT_NAME} (${subdir}) has already been built!")
+  else()
+      add_subdirectory(${SUBPROJECT_PATH})
+  endif()
+else()
+  message(STATUS "GIT not found")
+endif()
 ENDFOREACH()
 
 ##################################
@@ -113,13 +132,12 @@ ENDFOREACH()
 
 #add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_CPP_FILES})
 #target_link_libraries(${PROJECT_NAME} ${DEP0_GIT} ${DEP1_GIT})
-#target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS})
 
 #add_executable (main ${SRCPATH}main/main.cpp)
 #target_link_libraries(main ${LIB2_GIT} ... ${PROJECT_NAME})
 
-#SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} PARENT_SCOPE)
-#SET(${PROJECT_NAME}_LIBRARIES ${PROJECT_NAME} ${${DEP0_GIT}_LIBRARIES} ${${DEP1_GIT}_LIBRARIES} PARENT_SCOPE)
+#SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} CACHE STRING "${PROJECT_NAME} include dirs")
+#SET(${PROJECT_NAME}_LIBRARIES ${PROJECT_NAME} ${${DEP0_GIT}_LIBRARIES} ${${DEP1_GIT}_LIBRARIES} CACHE STRING "${PROJECT_NAME} libraries")
 
 #install(TARGETS ${PROJECT_NAME} main
 #        LIBRARY DESTINATION "lib"
